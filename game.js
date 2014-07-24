@@ -7,7 +7,7 @@ Game = {
 	object1: null,
 	object2: null,
 	canvas: null,
-	gameObjects: new Array(),
+	fallingBlock: null,
 	ctx: null,
 	board: null,
 	numRows: 30,
@@ -23,10 +23,10 @@ Game = {
 		for(y=0; y < this.numRows; y++) {
 			this.board[y] = new Array();
 			for(x=0; x < this.numColls; x++)
-				this.board[y][x] = new Block();
+				this.board[y][x] = new Block('transparent', x, y);
 		}
-		this.board[5][2].color = '#CBACFF';
-
+		this.fallingBlock = new GameObject(4,10,'type2');
+		this.board[13][9].color = '#00ff00';
 		console.log("game initalized");
 	},
 	
@@ -37,6 +37,7 @@ Game = {
 	},
 	
 	update: function(elapsed) {
+		this.fallingBlock.update(elapsed, this);
 		// for(i=0; i<30; i++) {
 			// var go = this.gameObjects[i];
 			// if (go.x > this.canvas.width - 10 && go.velocity > 0.0) {
@@ -56,14 +57,9 @@ Game = {
 		this.canvas.width = this.canvas.width;
 		
 		this.drawBoard();
-		this.ctx.fillStyle = "#FF0000";
-
-			
-		
+		this.fallingBlock.draw(this.ctx);
 	},
 	drawBoard: function() {
-		//this.ctx.fillRect(
-			//	this.gameObjects[i].x,this.gameObjects[i].y,10, 10);
 		for(y=0; y < this.numRows; y++) {
 			for(x=0; x < this.numColls; x++) {
 				var block = this.board[y][x];
