@@ -37,20 +37,26 @@ var GameObject = function(x,y,type) {
 	}
 	
 	this.shift = function(direction, game) {
-		this.x++;
-		var colisionType = this.checkCollision(game);
-		if( colisionType === 'blocks') {
-			console.log('blocks');
+		var currentX = this.x;
+		
+		if( direction === 'left') {
 			this.x--;
 		}
+		else if (direction === 'right') {
+			this.x++;
+		}
+		else {
+			throw 'wrong direction';
+		}
+			
+		var colisionType = this.checkCollision(game);
 		
 		switch(colisionType) {
 			case 'left':
-				this.x++;
-				break;
 			case 'right':
-				this.x--;
-				break;
+			case 'blocks':
+			this.x = currentX;
+
 		}
 		
 	}
@@ -68,12 +74,12 @@ var GameObject = function(x,y,type) {
 			if (worldX < 0)
 				return 'left';
 			
-			debugger;
 			for(board_i = 0; board_i<board.length; board_i++) {
 				boardBlock = board[board_i];
 				if(worldX === boardBlock.x 
-					&& worldY === boardBlock.y) {
-					debugger;
+					&& worldY === boardBlock.y
+					&& boardBlock.isSolid === true) {
+
 					return 'blocks';
 				}
 			}
@@ -97,6 +103,7 @@ var GameObject = function(x,y,type) {
 var Block = function(color,x,y) {
 	this.x = x;
 	this.y = y;
+	this.isSolid = false;
 	if(!color)
 		this.color = 'transparent'
 	else
