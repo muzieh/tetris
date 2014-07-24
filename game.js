@@ -24,7 +24,7 @@ Game = {
 			for(x=0; x < this.numColls; x++)
 				this.board[this._index(x,y)] = new Block('transparent', x, y);
 		}
-		this.fallingBlock = new GameObject(4,10,'type2');
+		this.fallingBlock = new GameObject(Game, 4,10,'type2');
 		
 		this.board[this._index(3,11)].color = '#00ff00';
 		this.board[this._index(3,11)].isSolid = true;
@@ -40,12 +40,20 @@ Game = {
 			var charCode = ('charCode' in event) ? event.charCode : event.keyCode;
 			switch(String.fromCharCode(charCode)) {
 				case 'a':
-					gameObject.fallingBlock.shift('left', gameObject);
+					gameObject.fallingBlock.shift('left');
 					console.log('left');
 					break;
 				case 'd':
-					gameObject.fallingBlock.shift('right', gameObject);
+					gameObject.fallingBlock.shift('right');
 					console.log('right');
+					break;
+				case 'w':
+					gameObject.fallingBlock.rotate('ccw');
+					console.log('ccw');
+					break;
+				case 's':
+					gameObject.fallingBlock.rotate('cw');
+					console.log('cw');
 					break;
 			}
 			//console.log(charCode);

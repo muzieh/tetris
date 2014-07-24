@@ -1,9 +1,10 @@
-var GameObject = function(x,y,type) {
+var GameObject = function(game, x,y,type) {
 	//this.velocity = velocity;
 	this.blocks = new Array();
 	this.x = x;
 	this.y = y;
 	this.elapsedCounter = 0;
+	this.game = game;
 	
 	this._initializeType1 = function() {
 		this.blocks.push(new Block('#000000',0,0));
@@ -28,15 +29,15 @@ var GameObject = function(x,y,type) {
 			this._initializeType2();
 			break;
 	}
-	this.update = function(elapsed, game) {
+	this.update = function(elapsed) {
 		this.elapsedCounter += elapsed;
 		if( this.elapsedCounter > 100) {
 			this.elapsedCounter = 0;
-			this.shift('right', game);
+			this.shift('right');
 		}
 	}
 	
-	this.shift = function(direction, game) {
+	this.shift = function(direction) {
 		var currentX = this.x;
 		
 		if( direction === 'left') {
@@ -49,26 +50,28 @@ var GameObject = function(x,y,type) {
 			throw 'wrong direction';
 		}
 			
-		var colisionType = this.checkCollision(game);
+		var colisionType = this.checkCollision();
 		
 		switch(colisionType) {
 			case 'left':
 			case 'right':
 			case 'blocks':
 			this.x = currentX;
-
 		}
-		
 	}
 	
-	this.checkCollision = function(game) {
-		var board = game.board;
+	this.rotate = function(direction) {
+		console.log(direction);
+	}
+	
+	this.checkCollision = function() {
+		var board = this.game.board;
 		for(i=0; i<this.blocks.length; i++) {
 			block = this.blocks[i];
 			var worldX = this.x + block.x;
 			var worldY = this.y + block.y;
 			
-			if( worldX >= game.numColls )
+			if( worldX >= this.game.numColls )
 				return 'right';
 				
 			if (worldX < 0)
@@ -98,7 +101,6 @@ var GameObject = function(x,y,type) {
 		}
 	}
 }
-
 
 var Block = function(color,x,y) {
 	this.x = x;
