@@ -37,6 +37,7 @@ Game = {
 
 		var gameObject = this;
 		body.onkeypress  = function(event) {
+			var event = event || window.event;
 			var charCode = ('charCode' in event) ? event.charCode : event.keyCode;
 			switch(String.fromCharCode(charCode)) {
 				case 'a':
