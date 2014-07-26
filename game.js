@@ -24,10 +24,10 @@ Game = {
 			for(x=0; x < this.numColls; x++)
 				this.board[this._index(x,y)] = new Block('transparent', x, y);
 		}
-		this.fallingBlock = new GameObject(Game, 4,10,'type2');
+		this.fallingBlock = new GameObject(Game, 4,10,'type7');
 		
-		this.board[this._index(3,11)].color = '#00ff00';
-		this.board[this._index(3,11)].isSolid = true;
+		//this.board[this._index(3,11)].color = '#00ff00';
+		//this.board[this._index(3,11)].isSolid = true;
 
 		
 		var body = document.getElementsByTagName("body")[0]; 
