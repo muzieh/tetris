@@ -20,14 +20,18 @@ Game = {
 		ts = document.getElementById("tvalue");
 		Game.time = (new Date()).getTime();
 		this.board = new Array();
+        var coloryfer = 0;
 		for(y=0; y < this.numRows; y++) {
-			for(x=0; x < this.numColls; x++)
-				this.board[this._index(x,y)] = new Block('transparent', x, y);
+            coloryfer = y%2== 0 ? 0 : 1;
+			for(x=0; x < this.numColls; x++) { 
+
+				this.board[this._index(x,y)] = new Block( (coloryfer++) %2 == 0 ? 'transparent' : 'transparent', x, y);
+            }
 		}
-		this.fallingBlock = new GameObject(Game, 4,10,'type7');
+		this.fallingBlock = new GameObject(Game, 4,0,'type4');
 		
-		//this.board[this._index(3,11)].color = '#00ff00';
-		//this.board[this._index(3,11)].isSolid = true;
+		//this.board[this._index(5,10)].color = '#00ff00';
+		//this.board[this._index(5,10)].isSolid = true;
 
 		
 		var body = document.getElementsByTagName("body")[0]; 
@@ -56,8 +60,13 @@ Game = {
 					gameObject.fallingBlock.rotate('cw');
 					console.log('cw');
 					break;
+                case 'o':
+                    gameObject.fallingBlock.update(1);
+                    break;
+                case ' ':
+                    gameObject.fallingBlock.speedUp();
+                    break;
 			}
-			//console.log(charCode);
 		}
 		
 		console.log("game initalized");
@@ -71,19 +80,7 @@ Game = {
 	
 	update: function(elapsed) {
 		//this.readKeys();
-		//this.fallingBlock.update(elapsed, this);
-		// for(i=0; i<30; i++) {
-			// var go = this.gameObjects[i];
-			// if (go.x > this.canvas.width - 10 && go.velocity > 0.0) {
-				// go.velocity = -1.0 * Math.abs(go.velocity);
-			// }
-			// else if(go.x <0.0 && go.velocity < 0.0) {
-				// go.velocity = Math.abs(go.velocity);
-			// }
-			// go.update(elapsed);
-		// }
-		
-		
+		this.fallingBlock.update(elapsed, this);
 	},
 	
 	draw: function(elapsed) {
